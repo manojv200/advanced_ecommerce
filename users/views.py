@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-from django.shortcuts import render
 from rest_framework import generics, permissions
 
 from users.models import TblUser
@@ -13,6 +12,7 @@ def index(request):
             <b>Your API Server is working!</b>
         </div>
     """)
+
 
 class RegisterView(generics.CreateAPIView):
     queryset = TblUser.objects.all()

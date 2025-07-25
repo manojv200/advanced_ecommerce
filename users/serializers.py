@@ -27,8 +27,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         return user
 
-class UserProfileSerializer(serializers.ModelSerializer):
 
+class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = TblUser
         fields = ['username', 'email', 'phone', 'address']

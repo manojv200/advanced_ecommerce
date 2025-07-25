@@ -29,10 +29,12 @@ def notify_order_status_change(sender, instance, **kwargs):
             }
         )
 
+
 @receiver([post_save, post_delete], sender=Product)
 def clear_product_cache(sender, instance, **kwargs):
     print("signal received")
     cache.delete("product_list")
+
 
 @receiver([post_save, post_delete], sender=Category)
 def clear_category_cache(sender, instance, **kwargs):

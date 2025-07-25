@@ -1,4 +1,3 @@
-from dirtyfields import DirtyFieldsMixin
 from django.db import models
 from model_utils import FieldTracker
 
@@ -15,8 +14,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
     class Meta:
         db_table = 'category'
+
 
 class Product(models.Model):
     name = models.CharField(max_length=100)
@@ -29,8 +30,10 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
     class Meta:
         db_table = 'product'
+
 
 class Cart(models.Model):
     user = models.ForeignKey(TblUser, on_delete=models.CASCADE)
@@ -48,6 +51,7 @@ class Cart(models.Model):
             total += item.total_price
         return total
 
+
 class CartItem(models.Model):
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
@@ -61,6 +65,7 @@ class CartItem(models.Model):
     @property
     def total_price(self):
         return self.quantity * self.product.price
+
 
 class Order(models.Model):
     pending = 0

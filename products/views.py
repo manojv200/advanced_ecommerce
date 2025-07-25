@@ -14,14 +14,15 @@ from products.models import Product, Category, Cart, Order
 from products.serializers import ProductSerializer, CategorySerializer, CartSerializer, CartItemSerializer, \
     OrderSerializer, OneOrderSerializer
 
-
 # Create your views here.
 status_fields = {
-    Order.pending :'pending',
-    Order.shipped :'shipped',
-    Order.delivered :'delivered',
-    Order.canceled :'Canceled',
+    Order.pending: 'pending',
+    Order.shipped: 'shipped',
+    Order.delivered: 'delivered',
+    Order.canceled: 'Canceled',
 }
+
+
 class CategoryCreateListView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -72,6 +73,7 @@ class CategoryUpdateDeleteView(APIView):
 
 class ProductCreateListView(APIView):
     permission_classes = [IsAuthenticated]
+
     def get(self, request):
         query_string = urlencode(request.GET)
         cache_key = f"product_list:{query_string if query_string else 'all'}"
@@ -84,7 +86,7 @@ class ProductCreateListView(APIView):
         paginator = PageNumberPagination()
         page = paginator.paginate_queryset(filtered_qs, request)
         serializer = ProductSerializer(page, many=True)
-        response= paginator.get_paginated_response(serializer.data)
+        response = paginator.get_paginated_response(serializer.data)
         cache.set(cache_key, response.data, timeout=3600)
         return response
 
@@ -143,9 +145,9 @@ class CartCreateListView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class CheckOutApiView(APIView):
     permission_classes = [IsAuthenticated]
+
     def post(self, request):
         data = request.data.copy()
         data['user'] = request.user.id
@@ -155,7 +157,7 @@ class CheckOutApiView(APIView):
             cart = Cart.objects.get(user=request.user)
             cart.is_deleted = True
             cart.save()
-            return Response({'detail':'Ordered items Successfully'}, status=status.HTTP_201_CREATED)
+            return Response({'detail': 'Ordered items Successfully'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request, pk=None):
@@ -167,8 +169,10 @@ class CheckOutApiView(APIView):
         serializer = OrderSerializer(orders, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+
 class OrderApiView(APIView):
     permission_classes = [IsAuthenticated]
+
     def post(self, request):
         data = request.data.copy()
         data['user'] = request.user.id
@@ -179,12 +183,14 @@ class OrderApiView(APIView):
         serializer = OneOrderSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
-            return Response({'data':serializer.data, 'detail':'Ordered Successfully'}, status=status.HTTP_201_CREATED)
+            return Response({'data': serializer.data, 'detail': 'Ordered Successfully'}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class UpdateOrderStatusView(APIView):
     def patch(self, request, pk=None):
         order = get_object_or_404(Order, pk=pk)
         order.status = request.data.get('status')
         order.save()
-        return Response({"message": f"Order status changed to {status_fields[int(order.status)]}."}, status=status.HTTP_200_OK)
+        return Response({"message": f"Order status changed to {status_fields[int(order.status)]}."},
+                        status=status.HTTP_200_OK)
