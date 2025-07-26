@@ -1,13 +1,19 @@
+#
 This is a Django backend for an e-commerce app using:
 
-PostgreSQL for database
-Redis For Caching
-REST Api with JWT Auth
-Docker Compose for setup
-How to Run
+- PostgreSQL for database
+- Redis For Caching
+- REST Api with JWT Auth
+- Docker Compose for setup
+
+---
+
+#How to Run
+
 #1. Clone the project
 
 git clone https://github.com/manojv200/advanced_ecommerce.git
+
 cd advanced_ecommerce
 
 #2. Create .env file
