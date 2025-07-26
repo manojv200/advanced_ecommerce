@@ -24,7 +24,7 @@ DB_PASSWORD=root
 DB_HOST=db
 SECRET_KEY=django-insecure-ck%4l82+$2h&p8=nf)cd20%lr901vn&0mvw*)wwy=#szrno4lt
 DEBUG=True
-
+REDIS_BROKER=REDIS
 #3. Start All Services
 
 docker compose up --build -d
