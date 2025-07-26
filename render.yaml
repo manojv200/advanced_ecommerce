@@ -38,6 +38,7 @@ services:
   - type: redis
     name: redis
     plan: free
+    ipAllowList: []
 
 databases:
   - name: ecommerce-db
