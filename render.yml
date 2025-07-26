@@ -1,0 +1,44 @@
+services:
+  - type: web
+    name: django-backend
+    env: docker
+    plan: free
+    branch: main
+    dockerContext: .
+    dockerfilePath: Dockerfile
+    envVars:
+      - key: DEBUG
+        value: False
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DB_HOST
+        fromDatabase:
+          name: ecommerce-db
+          property: host
+      - key: DB_NAME
+        fromDatabase:
+          name: ecommerce-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: ecommerce-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: ecommerce-db
+          property: password
+      - key: DB_PORT
+        value: 5432
+      - key: REDIS_URL
+        fromService:
+          name: redis
+          type: redis
+          property: connectionString
+
+  - type: redis
+    name: redis
+    plan: free
+
+databases:
+  - name: ecommerce-db
+    plan: free
