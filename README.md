@@ -16,15 +16,7 @@ git clone https://github.com/manojv200/advanced_ecommerce.git
 
 cd advanced_ecommerce
 
-#2. Create .env file
 
-DB_NAME=e_commerce_db
-DB_USER=root
-DB_PASSWORD=root
-DB_HOST=db
-SECRET_KEY=django-insecure-ck%4l82+$2h&p8=nf)cd20%lr901vn&0mvw*)wwy=#szrno4lt
-DEBUG=True
-REDIS_BROKER=REDIS
 #3. Start All Services
 
 docker compose up --build -d
